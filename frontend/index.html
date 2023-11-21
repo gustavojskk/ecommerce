@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-commerce System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>E-commerce Store</h1>
+      <nav id="cart">
+        <a href="#" @click="toggleCart">
+          Cart <span class="cart-count">{{ cart.length }}</span>
+        </a>
+        <div v-if="showCart" class="cart-items">
+          <div v-for="item in cart" :key="item._id" class="cart-item">
+            {{ item.name }} - ${{ item.price.toFixed(2) }}
+          </div>
+          <div v-if="cart.length === 0" class="empty-cart">Cart is empty</div>
+        </div>
+      </nav>
+    </header>
+
+    <section class="product-list">
+      <div v-for="product in products" :key="product._id" class="product">
+        <img :src="product.image" alt="Product Image">
+        <div class="product-details">
+          <h3>{{ product.name }}</h3>
+          <p>{{ product.description }}</p>
+          <p class="price">$ {{ product.price.toFixed(2) }}</p>
+          <button @click="addToCart(product._id)">Add to Cart</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="order-form" v-if="showOrderForm">
+      <h2>Order Details</h2>
+      <form>
+        <label for="customerName">Name:</label>
+        <input type="text" v-model="customerName" id="customerName" required>
+
+        <label for="customerEmail">Email:</label>
+        <input type="email" v-model="customerEmail" id="customerEmail" required>
+
+        <button type="button" @click="placeOrder">Place Order</button>
+      </form>
+    </section>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <script src="app.js"></script>
+</body>
+</html>
